@@ -11,7 +11,7 @@ pipeline {
         git 'https://github.com/iappstudio4/dockerwebapp.git'
         script{
                 def mvnHome = tool name: 'MAVEN_HOME', type: 'maven'
-                sh "${mvnHome}/bin/mvn package"
+                bat "${mvnHome}/bin/mvn package"
         }
       }
     }
@@ -38,7 +38,7 @@ pipeline {
     }
     stage('Deploy to Kubernetes'){
         steps{
-            sh 'kubectl apply -f deployment.yml'
+            bat 'kubectl apply -f deployment.yml'
        }
     }
   }
