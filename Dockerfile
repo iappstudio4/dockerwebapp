@@ -1,19 +1,14 @@
-FROM node:8
+FROM openjdk:11.0-jre-stretch
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /usr/share/demo-k8s
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
+ARG appDir=/usr/share/demo-k8s
+ARG DEPENDENCY=target/dependency
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
+COPY ${DEPENDENCY}/BOOT-INF/lib ${appDir}/lib
+COPY ${DEPENDENCY}/META-INF ${appDir}/META-INF
+COPY ${DEPENDENCY}/BOOT-INF/classes ${appDir}
 
-# Bundle app source
-COPY . .
+EXPOSE 8081 5005
 
-EXPOSE 8080
-CMD [ "npm", "start" ]
+ENTRYPOINT ["java","-cp","com/kubernetes/demo/*:lib/*:.","com.kubernetes.demo.K8SDemoApplication"]
