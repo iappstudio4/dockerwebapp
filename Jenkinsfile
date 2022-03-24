@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "iappstudio22/test"
+    registry = "iappstudio22/test2"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
